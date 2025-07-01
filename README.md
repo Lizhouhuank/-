@@ -25,7 +25,7 @@
 ### 安装步骤
 1. **克隆仓库**：
    ```bash
-   git clone https://github.com/your-username/your-repo.git
+   git clone https://github.com/Lizhouhuank/-
    cd your-repo
    ```
 2. **安装 Qt**：

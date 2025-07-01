@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>个人财务管理系统</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+    /* 全局样式 */
+    QWidget {
+        font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        font-size: 10pt;
+    }
+
+    /* 卡片式容器 */
+    QGroupBox {
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: white;
+    }
+
+    QGroupBox::title {
+        subcontrol-origin: margin;
+        subcontrol-position: top center;
+        padding: 0 5px;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    /* 按钮样式 */
+    QPushButton {
+        background-color: #3498db;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 12px;
+        font-weight: 500;
+    }
+
+    QPushButton:hover {
+        background-color: #2980b9;
+    }
+
+    QPushButton:pressed {
+        background-color: #1d6fa5;
+    }
+
+    QPushButton#deleteButton,
+    QPushButton#deleteAccountButton {
+        background-color: #e74c3c;
+    }
+
+    QPushButton#deleteButton:hover,
+    QPushButton#deleteAccountButton:hover {
+        background-color: #c0392b;
+    }
+
+    /* 表格样式 */
+    QTableView {
+        gridline-color: #e0e0e0;
+        alternate-background-color: #f9f9f9;
+        selection-background-color: #d6eaf8;
+        border: none;
+    }
+
+    QHeaderView::section {
+        background-color: #3498db;
+        color: white;
+        padding: 4px;
+        border: none;
+    }
+
+    /* 标签样式 */
+    QLabel#accountLabel {
+        font-size: 14pt;
+        font-weight: bold;
+        color: #2c3e50;
+    }
+
+    QLabel#incomeLabel {
+        color: #27ae60;
+        font-weight: bold;
+    }
+
+    QLabel#expenseLabel {
+        color: #e74c3c;
+        font-weight: bold;
+    }
+
+    QLabel#balanceLabel {
+        color: #3498db;
+        font-weight: bold;
+    }
+
+    /* 输入控件 */
+    QLineEdit, QComboBox, QDateEdit, QDoubleSpinBox {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px;
+    }
+
+    QTextEdit {
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        background-color: #f9f9f9;
+    }
+
+    /* 左侧面板 */
+    #leftPanel {
+        background-color: #f8f9fa;
+        border-right: 1px solid #e0e0e0;
+    }
+
+    /* 分隔线 */
+    QFrame#divider {
+        background-color: #e0e0e0;
+    }
+   </string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="0,1">
+    <item>
+     <widget class="QWidget" name="leftPanel" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt; font-weight:700; color:#3498db;&quot;&gt;财务管理&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxAccounts">
+         <property name="title">
+          <string>账户管理</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_3">
+          <item>
+           <widget class="QListView" name="accountListView">
+            <property name="minimumSize">
+             <size>
+              <width>250</width>
+              <height>200</height>
+             </size>
+            </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::SingleSelection</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: white;</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLineEdit" name="accountNameEdit">
+              <property name="placeholderText">
+               <string>账户名称</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="accountTypeCombo">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>0</height>
+               </size>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QPushButton" name="addAccountButton">
+              <property name="text">
+               <string>添加账户</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="deleteAccountButton">
+              <property name="text">
+               <string>删除账户</string>
+              </property>
+              <property name="objectName">
+               <string>deleteAccountButton</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBoxBudget">
+         <property name="title">
+          <string>预算管理</string>
+         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_8">
+            <item>
+             <widget class="QComboBox" name="budgetCategoryCombo"/>
+            </item>
+            <item>
+             <widget class="QDoubleSpinBox" name="budgetAmountSpin">
+              <property name="minimum">
+               <double>0.000000000000000</double>
+              </property>
+              <property name="maximum">
+               <double>1000000.000000000000000</double>
+              </property>
+              <property name="prefix">
+               <string>¥ </string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="setBudgetButton">
+              <property name="text">
+               <string>设置预算</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="budgetText">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+            <property name="placeholderText">
+             <string>预算情况将显示在这里</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: white;</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item>
+     <widget class="QFrame" name="divider">
+      <property name="frameShape">
+       <enum>QFrame::VLine</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Sunken</enum>
+      </property>
+      <property name="lineWidth">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QVBoxLayout" name="verticalLayout">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_7">
+        <item>
+         <widget class="QLabel" name="accountLabel">
+          <property name="text">
+           <string>当前账户: 现金账户</string>
+          </property>
+          <property name="objectName">
+           <string>accountLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="incomeLabel">
+          <property name="text">
+           <string>总收入: 0.00</string>
+          </property>
+          <property name="objectName">
+           <string>incomeLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="expenseLabel">
+          <property name="text">
+           <string>总支出: 0.00</string>
+          </property>
+          <property name="objectName">
+           <string>expenseLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="balanceLabel">
+          <property name="text">
+           <string>当前余额: 0.00</string>
+          </property>
+          <property name="objectName">
+           <string>balanceLabel</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeType">
+           <enum>QSizePolicy::Expanding</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QPushButton" name="exportButton">
+          <property name="text">
+           <string>导出报表</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../resources.qrc">
+            <normaloff>:/icons/export.png</normaloff>:/icons/export.png</iconset>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel">
+          <property name="text">
+           <string>日期范围:</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="dateFromEdit"/>
+        </item>
+        <item>
+         <widget class="QDateEdit" name="dateToEdit"/>
+        </item>
+        <item>
+         <widget class="QPushButton" name="filterButton">
+          <property name="text">
+           <string>过滤</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel">
+          <property name="text">
+           <string>记录总数: 0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableView" name="transactionTableView">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="selectionBehavior">
+         <enum>QAbstractItemView::SelectRows</enum>
+        </property>
+        <property name="selectionMode">
+         <enum>QAbstractItemView::SingleSelection</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: white;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="groupBoxTransaction">
+        <property name="title">
+         <string>添加交易记录</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="0" column="0">
+          <widget class="QLabel">
+           <property name="text">
+            <string>日期:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QDateEdit" name="dateEdit">
+           <property name="date">
+            <date>
+             <year>2023</year>
+             <month>1</month>
+             <day>1</day>
+            </date>
+           </property>
+           <property name="calendarPopup">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="2">
+          <widget class="QLabel">
+           <property name="text">
+            <string>类型:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="3">
+          <widget class="QComboBox" name="typeCombo">
+           <item>
+            <property name="text">
+             <string>支出</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>收入</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="0" column="4">
+          <widget class="QLabel">
+           <property name="text">
+            <string>类别:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="5">
+          <widget class="QComboBox" name="categoryCombo">
+           <item>
+            <property name="text">
+             <string>食品</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>交通</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>娱乐</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>住房</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>医疗</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel">
+           <property name="text">
+            <string>金额:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="QDoubleSpinBox" name="amountSpin">
+           <property name="minimum">
+            <double>0.000000000000000</double>
+           </property>
+           <property name="maximum">
+            <double>1000000.000000000000000</double>
+           </property>
+           <property name="prefix">
+            <string>¥ </string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="2">
+          <widget class="QLabel">
+           <property name="text">
+            <string>描述:</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="3" colspan="2">
+          <widget class="QLineEdit" name="descriptionEdit"/>
+         </item>
+         <item row="1" column="5">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
+           <item>
+            <widget class="QPushButton" name="addButton">
+             <property name="text">
+              <string>添加记录</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="deleteButton">
+             <property name="text">
+              <string>删除记录</string>
+             </property>
+             <property name="objectName">
+              <string>deleteButton</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>10</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources>
+  <include location="../resources.qrc"/>
+ </resources>
+ <connections/>
+</ui>
